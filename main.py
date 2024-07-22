@@ -12,7 +12,6 @@ bootstrap = Bootstrap5(app)
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    print('Api key: ', API_KEY)
     return {'message': 'Hello, World!'}
