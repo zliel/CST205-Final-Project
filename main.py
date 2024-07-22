@@ -3,6 +3,9 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from dotenv import load_dotenv
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'csumb-otter'
@@ -12,7 +15,18 @@ bootstrap = Bootstrap5(app)
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
-@app.route('/')
+
+class Query(FlaskForm):
+    query = StringField(
+        'Query',
+        validators=[DataRequired()]
+    )
+
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    print('Api key: ', API_KEY)
+    form = Query()
+    if form.validate_on_submit():
+        return redirect(f'/book_search_results/{form.query.data}')
     return {'message': 'Hello, World!'}
+    # return render_template('index.html', form=form)
