@@ -15,6 +15,7 @@ bootstrap = Bootstrap5(app)
 # read the dotenv
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
+BIG_BOOK_BASE_URL = 'https://api.bigbookapi.com/'
 
 
 class Query(FlaskForm):
@@ -34,4 +35,5 @@ def index():
 
 @app.route('/book_search_results/<query>')
 def book_search_results(query):
+
     return {'message': f'You searched for: {query}'}
