@@ -29,3 +29,4 @@ def index():
     if form.validate_on_submit():
         return redirect(f'/book_search_results/{form.query.data}')
     return {'message': 'Hello, World!'}
+    # return render_template('index.html', form=form)
