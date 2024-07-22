@@ -38,4 +38,5 @@ def index():
 def book_search_results(query):
     response = requests.get(f'{BIG_BOOK_BASE_URL}/search-books?api-key={API_KEY}&query={query}&number=20')
     data = response.json()
-    return {'data': data}
+    return {'book_list': data['books']}
+    # return render_template('book_search_results.html', book_list=data['books'])
