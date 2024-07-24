@@ -15,6 +15,7 @@ bootstrap = Bootstrap5(app)
 # read the dotenv
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
+BIG_BOOK_BASE_URL = 'https://api.bigbookapi.com'
 
 
 class Query(FlaskForm):
@@ -32,6 +33,12 @@ def index():
     return {'message': 'Hello, World!'}
     # return render_template('index.html', form=form)
 
+@app.route('/book_search_results/<query>')
+def book_search_results(query):
+    response = requests.get(f'{BIG_BOOK_BASE_URL}/search-books?api-key={API_KEY}&query={query}&number=20')
+    data = response.json()
+    return {'book_list': data['books']}
+    # return render_template('book_search_results.html', book_list=data['books'])
 
 @app.route('/recommendation_results/<int:book_id>', methods=['GET'])
 def recommendation_results(book_id):
@@ -53,8 +60,6 @@ def recommendation_results(book_id):
     ]
     print(f"Book List: {book_list}")
     return render_template('recommendation_results.html', book_list=book_list,original_book_title=original_book['title'])
-
-
 
 
 
