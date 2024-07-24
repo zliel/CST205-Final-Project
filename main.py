@@ -61,7 +61,21 @@ def recommendation_results(book_id):
     print(f"Book List: {book_list}")
     return render_template('recommendation_results.html', book_list=book_list,original_book_title=original_book['title'])
 
-
+@app.route('/book_info/<int:book_id>', methods=['GET'])
+def book_info(book_id):
+    endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
+    response = requests.get(endpoint)
+    book = response.json()
+    print(f'raw:{book}')
+    book_info = {
+        "title": book.get("title"),
+        "cover_image_url": book.get("image"),
+        "isbn": book.get("identifiers", {}).get("isbn_10"),
+        "author_name": ", ".join(author.get("name") for author in book.get("authors", [])),  # Getting all author names
+        "average_rating": book.get("rating", {}).get("average"),
+    }
+    print (f"book info{book_info}")
+    return render_template('book_info.html', book_info=book_info)
 
 if __name__ == '__main__':
     app.run(debug=True)
