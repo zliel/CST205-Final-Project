@@ -37,14 +37,24 @@ def index():
 def book_search_results(query):
     response = requests.get(f'{BIG_BOOK_BASE_URL}/search-books?api-key={API_KEY}&query={query}&number=20')
     data = response.json()
-    return {'book_list': data['books']}
-    # return render_template('book_search_results.html', book_list=data['books'])
+    books = data.get('books', [])
+    # print(f"Books: {books}")
+    book_list = [
+        {
+            "id": book[0]["id"],
+            "title": book[0]["title"],
+            "subtitle": book[0].get("subtitle", ""),
+            "cover_image_url": book[0]["image"]
+        }
+        for book in books
+    ]
+    return render_template('book_search_results.html', book_list=book_list, original_query=query)
 
 @app.route('/recommendation_results/<int:book_id>', methods=['GET'])
 def recommendation_results(book_id):
     endpoint = f'https://api.bigbookapi.com/{book_id}/similar?api-key={API_KEY}'
     response = requests.get(endpoint)
-    print(f"Recommendations Response JSON: {response.json()}")
+    # print(f"Recommendations Response JSON: {response.json()}")
     books = response.json().get('similar_books', [])
     original_book_endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
     orignal_response = requests.get(original_book_endpoint)
@@ -58,7 +68,7 @@ def recommendation_results(book_id):
         }
         for book in books
     ]
-    print(f"Book List: {book_list}")
+    # print(f"Book List: {book_list}")
     return render_template('recommendation_results.html', book_list=book_list,original_book_title=original_book['title'])
 
 @app.route('/book_info/<int:book_id>', methods=['GET'])
@@ -66,7 +76,7 @@ def book_info(book_id):
     endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
     response = requests.get(endpoint)
     book = response.json()
-    print(f'raw:{book}')
+    # print(f'raw:{book}')
     book_info = {
         "title": book.get("title"),
         "cover_image_url": book.get("image"),
@@ -74,7 +84,7 @@ def book_info(book_id):
         "author_name": ", ".join(author.get("name") for author in book.get("authors", [])),  # Getting all author names
         "average_rating": book.get("rating", {}).get("average"),
     }
-    print (f"book info{book_info}")
+    # print (f"book info{book_info}")
     return render_template('book_info.html', book_info=book_info)
 
 if __name__ == '__main__':

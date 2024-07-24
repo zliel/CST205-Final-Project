@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Recommendations</title>
+    <title>Book Search Results</title>
     {{ bootstrap.load_css() }}
 </head>
 <body>
     <div class="container">
-        <h1>Book recommendations list for "{{ original_book_title }}"</h1>
-        <h3>Select one for more information about it</h3>
+        <h1>Book recommendations list for "{{ original_query }}"</h1>
+        <h3>Select one to get recommendations</h3>
         <div class="row">
             {% for book in book_list %}
                 <div class="col-md-4">
@@ -17,7 +17,8 @@
                         <img src="{{ book.cover_image_url }}" class="card-img-top" alt="{{ book.title }}">
                         <div class="card-body">
                             <p class="card-title">
-                                <a href="{{ url_for('book_info', book_id=book.id) }}">{{ book.title }}</a>
+                                {{ book.id}}
+                                <a href="{{ url_for('recommendation_results', book_id=book['id']) }}">{{ book.title }}</a>
                             </p>
                             {% if book.subtitle %}
                                 <h6 class="card-subtitle mb-2 text-muted">{{ book.subtitle }}</h6>
