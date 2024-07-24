@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book_info.title }}</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    <div class="container">
+        <h1>{{ book_info.title }}</h1>
+        <img src="{{ book_info.cover_image_url }}" alt="{{ book_info.title }}" class="img-fluid">
+        <p><strong>ISBN:</strong> {{ book_info.isbn }}</p>
+        <p><strong>Author:</strong> {{ book_info.author_name }}</p>
+        <p><strong>Average Rating:</strong> {{ book_info.average_rating }}</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+    </div>
+</body>
+</html>
