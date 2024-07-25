@@ -30,8 +30,7 @@ def index():
     form = Query()
     if form.validate_on_submit():
         return redirect(f'/book_search_results/{form.query.data}')
-    return {'message': 'Hello, World!'}
-    # return render_template('index.html', form=form)
+    return render_template('index.html', form=form)
 
 @app.route('/book_search_results/<query>')
 def book_search_results(query):
