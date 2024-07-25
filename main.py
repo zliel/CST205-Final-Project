@@ -2,13 +2,15 @@
 Authors: Zackary Liel, Maria Santiago, Oscar Alvarado, and Smirth Luciano
 Class: CST 205
 Date: 7/24/2024
-Abstract: This program is a web application that allows users to search for books based on a search query they enter. The user can then select a book from the list and will be shown recommendations based on the chosen book. The user can then select a recommended book and will be shown information on the book such as the title, book cover, isbn, author's name, and the book's average rating.
+Abstract: This program is a web application that allows users to search for books based on a search query they enter.
+The user can then select a book from the list and will be shown recommendations based on the chosen book. The user can then select a recommended book and will be shown information on the book such as the title, book cover, isbn, author's name, and the book's average rating.
 
 Who did what:
-Zackary worked on the flask routes for the index and book_search_results, and the book_info route. He also worked on the HTML templates for the index, book_search_results, and the template for book_search_results.html. He also worked on the README file.
-Maria finished the index's flask route and made its template. She also did the docstrings for the route functions.
-Oscar worked on the flask route and template for the recommendation_results route.
-Smirth worked on the flask route and template for the book_info route.
+- Zackary worked on the flask routes for the index and book_search_results, and the book_info route. He also worked on
+the HTML templates for the index, book_search_results, and the template for book_search_results.html. He also worked on the README file.
+- Maria finished the index's flask route and made its template. She also did the docstrings for the route functions.
+- Oscar worked on the flask route and template for the recommendation_results route.
+- Smirth worked on the flask route and template for the book_info route.
 """
 import os
 
