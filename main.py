@@ -32,6 +32,8 @@ def index():
         return redirect(f'/book_search_results/{form.query.data}')
     return render_template('index.html', form=form)
 
+'''This route is for the initial search for a book recommendation'''
+
 @app.route('/book_search_results/<query>')
 def book_search_results(query):
     response = requests.get(f'{BIG_BOOK_BASE_URL}/search-books?api-key={API_KEY}&query={query}&number=20')
@@ -48,6 +50,8 @@ def book_search_results(query):
         for book in books
     ]
     return render_template('book_search_results.html', book_list=book_list, original_query=query)
+
+'''This route takes the user to the list of book recommendations based on the search query they entered'''
 
 @app.route('/recommendation_results/<int:book_id>', methods=['GET'])
 def recommendation_results(book_id):
@@ -70,6 +74,8 @@ def recommendation_results(book_id):
     # print(f"Book List: {book_list}")
     return render_template('recommendation_results.html', book_list=book_list,original_book_title=original_book['title'])
 
+'''This route takes the user to another list of book recommendations based on the book recommendation they chose from the first list.'''
+
 @app.route('/book_info/<int:book_id>', methods=['GET'])
 def book_info(book_id):
     endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
@@ -86,5 +92,6 @@ def book_info(book_id):
     # print (f"book info{book_info}")
     return render_template('book_info.html', book_info=book_info)
 
+'''This route provides the user with the information on the book they selected such as title, book image, isbn, author's name and the books average rating.'''
 if __name__ == '__main__':
     app.run(debug=True)
