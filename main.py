@@ -51,10 +51,14 @@ def index():
 @app.route('/book_search_results/<query>')
 def book_search_results(query):
     """This route takes the user to the list of book recommendations based on the search query they entered"""
+    # Fetch the books from the API
     response = requests.get(f'{BIG_BOOK_BASE_URL}/search-books?api-key={API_KEY}&query={query}&number=20')
     data = response.json()
     books = data.get('books', [])
     # print(f"Books: {books}")
+    # Get the book id, title, subtitle, and cover image url for each book from the response
+    # Note that the response gives back each book dictionary inside of a list, even though there's only one item per sublist.
+    # So we had to use book[0] to get the dictionary for each book.
     book_list = [
         {
             "id": book[0]["id"],
@@ -71,12 +75,14 @@ def book_search_results(query):
 def recommendation_results(book_id):
     """This route takes the user to another list of book recommendations based on the book recommendation they chose from the first list."""
     endpoint = f'https://api.bigbookapi.com/{book_id}/similar?api-key={API_KEY}'
+    # Fetch the recommendations from the API
     response = requests.get(endpoint)
     # print(f"Recommendations Response JSON: {response.json()}")
     books = response.json().get('similar_books', [])
     original_book_endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
     orignal_response = requests.get(original_book_endpoint)
     original_book = orignal_response.json()
+    # Get the book id, title, subtitle, and cover image url for each book from the response
     book_list = [
         {
             "id": book["id"],
@@ -94,9 +100,11 @@ def recommendation_results(book_id):
 def book_info(book_id):
     """This route provides the user with the information on the book they selected such as title, book image, isbn, author's name and the books average rating."""
     endpoint = f'https://api.bigbookapi.com/{book_id}?api-key={API_KEY}'
+    # Fetch the book information from the API
     response = requests.get(endpoint)
     book = response.json()
     # print(f'raw:{book}')
+    # Get the book title, cover image url, isbn, author name, and average rating from the response
     book_info = {
         "title": book.get("title"),
         "cover_image_url": book.get("image"),
