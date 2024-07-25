@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>SEARCH</title>
+      {{ bootstrap.load_css() }}
+  </head>
+<body>
+    <div class="container mb-4">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="card-title">SEARCH FOR A BOOK</h2>
+                <form method="POST" action="/">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        {{ form.query.label }}
+                        {{ form.query(class="form-control", placeholder="Enter search query") }}
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        
+    </div>
+
+</body>
+</html>
