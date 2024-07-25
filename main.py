@@ -1,3 +1,15 @@
+"""
+Authors: Zackary Liel, Maria Santiago, Oscar Alvarado, and Smirth Luciano
+Class: CST 205
+Date: 7/24/2024
+Abstract: This program is a web application that allows users to search for books based on a search query they enter. The user can then select a book from the list and will be shown recommendations based on the chosen book. The user can then select a recommended book and will be shown information on the book such as the title, book cover, isbn, author's name, and the book's average rating.
+
+Who did what:
+Zackary worked on the flask routes for the index and book_search_results, and the book_info route. He also worked on the HTML templates for the index, book_search_results, and the template for book_search_results.html. He also worked on the README file.
+Maria finished the index's flask route and made its template. She also did the docstrings for the route functions.
+Oscar worked on the flask route and template for the recommendation_results route.
+Smirth worked on the flask route and template for the book_info route.
+"""
 import os
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -32,7 +44,6 @@ def index():
     if form.validate_on_submit():
         return redirect(f'/book_search_results/{form.query.data}')
     return render_template('index.html', form=form)
-
 
 
 @app.route('/book_search_results/<query>')
@@ -75,7 +86,6 @@ def recommendation_results(book_id):
     ]
     # print(f"Book List: {book_list}")
     return render_template('recommendation_results.html', book_list=book_list,original_book_title=original_book['title'])
-
 
 
 @app.route('/book_info/<int:book_id>', methods=['GET'])
